@@ -32,8 +32,9 @@ X = data(:, [1, 2]); y = data(:, 3);
 
 fprintf(['Plotting data with + indicating (y = 1) examples and o ' ...
          'indicating (y = 0) examples.\n']);
-
-plotData(X, y);
+% X = X(1:10,:);
+% y = y(1:10);
+plotData(X, Y);
 
 % Put some labels 
 hold on;
