@@ -75,9 +75,15 @@ for i = 1:m
 
 	yi = (y(i,1) == k);
 	J = J + (( yi * log(a3)) + (1-yi) * log(1 - a3))/-m;
-	 % + lambda * sum(t2.^2) / (2*m);
 end	
 
+t1 = Theta1;
+t1(1) = 0;
+
+t2 = Theta2;
+t2(1) = 0;
+
+J = J + lambda/(2*m) * (sum(sum(t1 .^ 2)) + sum(sum(t2.^2)));
 
 
 
