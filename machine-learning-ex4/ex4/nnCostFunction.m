@@ -87,12 +87,12 @@ for i = 1:m
 
 	% Back prop
 
-	lambda_3 = a3 - y_row';
-	lambda_2 = Theta2' * lambda_3;
-	lambda_2 = lambda_2(2:end) .* sigmoidGradient(z2);
+	lmbd_3 = a3 - y_row';
+	lmbd_2 = Theta2' * lmbd_3;
+	lmbd_2 = lmbd_2(2:end) .* sigmoidGradient(z2);
 
-	delta_2 = delta_2 + lambda_3 * a2';
-	delta_1 = delta_1 + lambda_2 * a1';
+	delta_2 = delta_2 + lmbd_3 * a2';
+	delta_1 = delta_1 + lmbd_2 * a1';
 
 end	
 
