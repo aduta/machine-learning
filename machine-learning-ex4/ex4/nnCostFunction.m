@@ -61,19 +61,39 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
+
 X = [ones(m,1) X];
 k = 1:num_labels;
+delta_2 = zeros(size(Theta2));
+delta_1 = zeros(size(Theta1));
+
 for i = 1:m
 	a1 = X(i,:)';
-	
-	a2 = sigmoid(Theta1 * a1);
-	a2 = [1; a2];
-	
-	a3 = sigmoid(Theta2 * a2);
-	% a3 = [1; a3];
+	% size(a1)
 
-	yi = (y(i,1) == k);
-	J = J + (( yi * log(a3)) + (1-yi) * log(1 - a3))/-m;
+	z2 = Theta1 * a1;
+	a2 = sigmoid(z2);
+	a2 = [1; a2];
+	% size(a2)
+	
+	z3 = Theta2 * a2;
+	a3 = sigmoid(z3);
+	% size(a3)
+
+	y_row = (y(i,1) == k);
+	% size(y_row)
+
+	J = J + (( y_row * log(a3)) + (1 - y_row) * log(1 - a3))/-m;
+
+	% Back prop
+
+	lambda_3 = a3 - y_row';
+	lambda_2 = Theta2' * lambda_3;
+	lambda_2 = lambda_2(2:end) .* sigmoidGradient(z2);
+
+	delta_2 = delta_2 + lambda_3 * a2';
+	delta_1 = delta_1 + lambda_2 * a1';
+
 end	
 
 t1 = Theta1;
@@ -83,7 +103,9 @@ t2 = Theta2;
 t2(:,1) = 0;
 
 J = J + lambda/(2*m) * (sum(sum(t1 .^ 2)) + sum(sum(t2.^2)));
-% J = J + (sum(sum(t1 .^ 2)) + sum(sum(t2.^2))) * lambda/(2*m);
+
+Theta1_grad = delta_1/m;
+Theta2_grad = delta_2/m;
 
 
 
