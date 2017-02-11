@@ -104,8 +104,11 @@ t2(:,1) = 0;
 
 J = J + lambda/(2*m) * (sum(sum(t1 .^ 2)) + sum(sum(t2.^2)));
 
-Theta1_grad = delta_1/m;
-Theta2_grad = delta_2/m;
+Theta1_grad = (delta_1 + lambda * t1) / m;
+Theta2_grad = (delta_2 + lambda * t2) / m;
+
+Theta1_grad(:,1) = delta_1(:, 1) / m;
+Theta2_grad(:,1) = delta_2(:, 1) / m;
 
 
 
