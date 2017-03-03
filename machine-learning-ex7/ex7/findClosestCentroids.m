@@ -20,13 +20,16 @@ idx = zeros(size(X,1), 1);
 %
 % Note: You can use a for-loop over the examples to compute this.
 %
-for i=1:size(idx)
-  point = X(i,:);
-  difference = centroids - point;
-  norms = sum(difference .^ 2, 2);
-  [v,idx(i)] = min(norms);
-
-
+  for i=1:size(idx)
+    minNorm = 0;
+    for j=1:size(centroids,1)
+      difference = X(i,:) - centroids(j,:);
+      norm = sum(difference .^ 2, 2);
+      if norm < minNorm || minNorm == 0
+        idx(i) = j;
+        minNorm = norm;
+      end
+  end
 % =============================================================
 
 end
