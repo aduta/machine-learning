@@ -43,16 +43,19 @@ Theta_grad = zeros(size(Theta));
 % x = X(1)
 % tsize = size(Theta)
 for i=1:num_movies
+
+  x = X(i,:);
   for j=1:num_users
+
       if R(i, j) == 1
-        x = X(i,:);
         t = Theta(j,:);
         y = Y(i,j);
         J += (t * x' - y) ^ 2;
       end
   end
-  J = J/2;
 end
+
+J = J/2;
 
 
 
